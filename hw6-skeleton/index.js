@@ -25,6 +25,9 @@ app.post("/new", (req, res) => {
 // I send the flashcards array as a response?
 // QUESTION 1.
 /* YOUR CODE HERE */
+app.get('/cards', (req, res)=>{
+    res.send(flashcards);
+});
 
 app.get("/card/:id", (req, res) => {
     if (req.params.id >= flashcards.length) {
@@ -33,6 +36,7 @@ app.get("/card/:id", (req, res) => {
         // Ddoski: I want to send back a JSON of the flashcard at the index [req.params.id]! (Hint: res.json() might be helpful here)
         // QUESTION 2.
         /* YOUR CODE HERE */
+        res.json(flashcards[req.params.id])
     }
 })
 
@@ -52,14 +56,17 @@ app.get("/random", (req, res) => {
 // Hint: Check above for how we did it for a previous endpoint.
 // Hint: You might use flashcards.splice(req.params.id, 1) here to delete the card.
 // QUESTION 3.
-app.get(/* YOUR CODE HERE */, (req, res) => {
+app.get("/delete/:index", (req, res) => {
     // First, check if req.params.id is more than or equal to the length of the flashcards array.
     // If it is, that means the card the user wants to delete does not exist, so send "Card does not exist".
-    if (/* YOUR CODE HERE */) {
+    if (req.params.index > flashcards.length) {
         /* YOUR CODE HERE */
+        res.send("Incorrect delete")
     } else {
         // Now, delete the card, and send the flashcards array back as a response.
         /* YOUR CODE HERE */
+        res.send(flashcards[req.params.index])
+        flashcards.splice(req.params.index, 1)
     }
 })
 
@@ -193,4 +200,5 @@ app.listen(3000, () => {
     
     // QUESTION 4.
     /* YOUR CODE HERE */
+    console.log("Listening on port 3000")
 })
